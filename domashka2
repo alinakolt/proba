@@ -1,0 +1,99 @@
+def lvl_1():  
+    print('Выбирай:')  
+    print('- upper: Все буквы в старший регистр')  
+    print('- lower: Все буквы в младший регистр')  
+    print('- capitalize: Только первая буква в старший регистр')  
+    action = input()  
+  
+    if action == 'upper':  
+        print(txt.upper())  
+    elif action == 'lower':  
+        print(txt.lower())  
+    elif action == 'capitalize':  
+        print(txt.capitalize())  
+  
+  
+def lvl_2():  
+    print('Выбирай:')  
+    print('- replace: заменяет ВСЕ (если не указано парамтером иначе) вхождения одной подстроки на другую подстроку')  
+    print('- index или find: Ищет индекс первого вхождения подстроки в строку.')  
+    print('   - index: 1) Для всех итерируемых объектов 2) Если подстрока не найдена - вызывается исчключение')  
+    print('   - find: 1) Только для строк 2) Если подстрока не найдена - возвращает -1')  
+    print('- count: Считает количество вхождений строки')  
+  
+    action = input()  
+  
+    if action == 'replace':  
+        print('Напиши что и на что поменять (через пробел)')  
+        a, b = input().split()  
+        print(txt.replace(a, b))  
+    elif action == 'find':  
+        print('Напиши, какую подстроку хочешь найти')  
+        print('Если хочешь узнать разницу между index и find, напиши index vs find')  
+        substr = input()  
+        print(f'{substr} находиться по индексу {action.find(substr)}')  
+    elif action == 'index':  
+        print('Напиши, какую подстроку хочешь найти')  
+        substr = input()  
+        print(f'{substr} находиться по индексу {action.find(substr)}')  
+    elif action == 'count':  
+        print('Напиши подстроку, количество вхождений которой хочешь посчитать')  
+        substr = input()  
+        print(f'В {txt} находиться {txt.count(substr)} вхождение "{substr}"')  
+  
+  
+def lvl_3():  
+    print('Выбирай')  
+    print('- split(): Делит строку по указанному разделителю и возвращает список всех кусков')  
+    print('- join(): Склеивает отдельные куски в одну строку. Может вставить между всеми кусками указанную подстроку')  
+  
+    action = input()  
+    if action == 'split':  
+        print('Напиши разделитель')  
+        divider = input()  
+        print(txt.split(divider))  
+    elif action == 'join':  
+        print(''.join(txt.split()))  
+  
+  
+def lvl_4():  
+    print('Выбирай')  
+    print('- isdigit: проверяет, представляет ли строка из себя число')  
+    print('- isalpha: проверяет, состоит ли строка только из букв')  
+    print('- strip: убирает по краям')  
+    print('- format: f строки')  
+  
+    action = input()  
+    if action == 'isdigit':  
+        print(txt.isdigit())  
+    elif action == 'isalpha':  
+        print(txt.isalpha())  
+    elif action == 'strip':  
+        print('Введи символы')  
+        chrs = input()  
+        print(txt.strip(chrs))  
+  
+  
+  
+boss = '__pYthoN;is;AweSome;___'  
+boss = boss.strip('_')  
+boss = boss.replace(';', ' ')  
+boss = boss.capitalize()  
+print(boss)  
+  
+  
+print('Напиши текст!')  
+txt = input()  
+  
+while True:  
+    print('Выбери уровень!')  
+    lvl = input()  
+  
+    if lvl == '1':  
+        lvl_1()  
+    elif lvl == '2':  
+        lvl_2()  
+    elif lvl == '3':  
+        lvl_3()  
+    elif lvl == '4':  
+        lvl_4()
