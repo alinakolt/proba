@@ -1,0 +1,155 @@
+from random import *
+from os import system
+
+
+class GameObject:
+    x : int
+    y : int
+
+    def init(self, x, y):
+        self.x = x
+        self.y = y
+
+    def collision(self, obj):
+        return (obj.x == self.x) and (obj.y == self.y)
+
+class Hero(GameObject):
+    has_key : bool = False
+    health : int = 3
+
+
+    def move(self, x, y):
+        self.x += x
+        self.y += y
+
+class Key(GameObject):
+    pass
+
+class Exit(GameObject):
+    pass
+
+
+class Trap(GameObject):
+    pass
+
+
+class GameMap:
+    width : int
+    heigth : int
+
+    hero : Hero
+    key : Key
+    exit : Exit
+    trap : Trap
+
+    game_map = []
+
+    def init(self, width, height, hero, key, exit, trap):
+        self.width = width
+        self.height = height
+        self.hero = hero
+        self.key = key
+        self.exit = exit
+        self.trap = trap
+
+    def generate(self):
+        self.game_map = []
+        for y in range(self.height):
+            map_string = []
+            for x in range(self.width):
+                if (x == self.hero.x) and (y == self.hero.y):
+                    map_string.append('H')
+                elif (x == self.key.x) and (y == self.key.y):
+                    map_string.append('K')
+                elif (x == self.exit.x) and (y == self.exit.y):
+                    map_string.append('E')
+                elif (x == self.trap.x) and (y == self.trap.y):
+                    map_string.append('T')
+                else:
+                    map_string.append('_')
+            self.game_map.append(map_string)
+
+
+    def print_map(self):
+        for y1 in range(self.height):
+            s : str = ''
+            for x1 in range(self.width):
+                s += self.game_map[y1][x1]
+            print(s)
+
+
+    # 0 - пусто
+    # 1 - сундук
+    # 2 - моб
+    # 3 - Ключ
+    # 4 - ловушка
+    # 5 - портал
+
+def game():
+    map_height = 5
+    map_width = 5
+
+    hero : Hero = Hero(3, 3)
+    key : Key = Key(0, 0)
+    exit : Exit = Exit(4, 4)
+    trap : Trap = Trap(0, 1)
+
+    game_map : GameMap = GameMap(map_width, map_height, hero, key, exit, trap)
+    game_map.generate()
+    game_map.print_map()
+
+    while True:
+        inp = input()
+
+        system("clear||cls")
+
+
+        if (hero.has_key):
+            print('Inventory : Key')
+        else:
+            print('Inventory : ...')
+
+        print(f'Health : {hero.health}')
+        print()
+
+        if inp == 'w':
+            hero.move(0, -1)
+        elif inp == 's':
+            hero.move(0, 1)
+        elif inp == 'a':
+            hero.move(-1, 0)
+        elif inp == 'd':
+            hero.move(1, 0)
+        elif inp == 'i':
+            print()
+            print()
+        elif inp == 'h':
+            print()
+            print()
+
+
+
+        if hero.collision(key):
+            key.x = -1
+            key.y = -1
+            hero.has_key = True
+
+        if hero.collision(trap):
+            hero.health -= 1
+
+
+        if hero.collision(exit) and hero.has_key:
+            print()
+            print()
+            print("YOU WOOOOON !!!!!!!!!!!!!!!1")
+            return
+
+        game_map.generate()
+        game_map.print_map()
+
+
+game()
+
+
+
+# Пусто, сундук, моб, ключ, ловушка, портал
