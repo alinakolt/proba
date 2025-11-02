@@ -3,54 +3,49 @@ from os import system
 
 
 class GameObject:
-    x : int
-    y : int
-
-    def init(self, x, y):
+    def __init__(self, x, y):
         self.x = x
         self.y = y
 
     def collision(self, obj):
         return (obj.x == self.x) and (obj.y == self.y)
 
-class Hero(GameObject):
-    has_key : bool = False
-    health : int = 3
 
+class Hero(GameObject):
+    def __init__(self, x, y):
+        super().__init__(x, y)
+        self.has_key = False
+        self.health = 3
 
     def move(self, x, y):
         self.x += x
         self.y += y
 
+
 class Key(GameObject):
-    pass
+    def __init__(self, x, y):
+        super().__init__(x, y)
+
 
 class Exit(GameObject):
-    pass
+    def __init__(self, x, y):
+        super().__init__(x, y)
 
 
 class Trap(GameObject):
-    pass
+    def __init__(self, x, y):
+        super().__init__(x, y)
 
 
 class GameMap:
-    width : int
-    heigth : int
-
-    hero : Hero
-    key : Key
-    exit : Exit
-    trap : Trap
-
-    game_map = []
-
-    def init(self, width, height, hero, key, exit, trap):
+    def __init__(self, width, height, hero, key, exit, trap):
         self.width = width
         self.height = height
         self.hero = hero
         self.key = key
         self.exit = exit
         self.trap = trap
+        self.game_map = []
 
     def generate(self):
         self.game_map = []
@@ -69,42 +64,32 @@ class GameMap:
                     map_string.append('_')
             self.game_map.append(map_string)
 
-
     def print_map(self):
         for y1 in range(self.height):
-            s : str = ''
+            s = ''
             for x1 in range(self.width):
                 s += self.game_map[y1][x1]
             print(s)
 
 
-    # 0 - пусто
-    # 1 - сундук
-    # 2 - моб
-    # 3 - Ключ
-    # 4 - ловушка
-    # 5 - портал
-
 def game():
     map_height = 5
     map_width = 5
 
-    hero : Hero = Hero(3, 3)
-    key : Key = Key(0, 0)
-    exit : Exit = Exit(4, 4)
-    trap : Trap = Trap(0, 1)
+    hero = Hero(3, 3)
+    key = Key(0, 0)
+    exit = Exit(4, 4)
+    trap = Trap(0, 1)
 
-    game_map : GameMap = GameMap(map_width, map_height, hero, key, exit, trap)
+    game_map = GameMap(map_width, map_height, hero, key, exit, trap)
     game_map.generate()
     game_map.print_map()
 
     while True:
         inp = input()
-
         system("clear||cls")
 
-
-        if (hero.has_key):
+        if hero.has_key:
             print('Inventory : Key')
         else:
             print('Inventory : ...')
@@ -127,8 +112,6 @@ def game():
             print()
             print()
 
-
-
         if hero.collision(key):
             key.x = -1
             key.y = -1
@@ -136,7 +119,6 @@ def game():
 
         if hero.collision(trap):
             hero.health -= 1
-
 
         if hero.collision(exit) and hero.has_key:
             print()
@@ -149,7 +131,3 @@ def game():
 
 
 game()
-
-
-
-# Пусто, сундук, моб, ключ, ловушка, портал
