@@ -1,0 +1,43 @@
+import pandas as pd
+from sympy.codegen.cfunctions import isnan
+
+
+def next():
+    print()
+    print('===============================')
+    print()
+
+
+with open('C:/Users/ВЧ/OneDrive/Рабочий стол/tested.csv', mode='r') as f:
+    df = pd.read_csv(f)
+
+
+print('Признаки:')
+print()
+print(df.dtypes)
+next()
+
+print('Первые 5 строк')
+print()
+print(df.head(5))
+next()
+
+print('Базовая статистика по возрасту')
+print()
+print(df['Age'].describe())
+next()
+
+print('Количество заголовков')
+colums_count = len(df.iloc[0])
+print(colums_count)
+print('Количество строк')
+rows_count = len(df.iloc[:, 0])
+print(rows_count)
+next()
+
+
+print('Мужчин:', len(df[df['Sex'] == 'male']) / rows_count * 100, '%')
+print('Женщин:', len(df[df['Sex'] == 'female']) / rows_count * 100, '%')
+
+print('Выживших мужчин:', len(df[(df['Sex'] == 'male') & (df['Survived'] == 1)]) / rows_count * 100, '%')
+print('Выживших женщин:', len(df[(df['Sex'] == 'female') & (df['Survived'] == 1)]) / rows_count * 100, '%')
