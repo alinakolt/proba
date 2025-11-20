@@ -1,0 +1,41 @@
+import PyQt6 as qt
+import PyQt6.QtWidgets as qtw
+import PyQt6.QtGui as qtg
+import sys
+
+
+app = qtw.QApplication(sys.argv)
+
+class MainWindow(qtw.QMainWindow):
+    def init(self):
+        super().init()
+
+        self.setWindowTitle("app")
+
+        button = qtw.QPushButton('НАПИШИ ФРУКТ')
+        button.setMinimumSize(100, 50)
+
+        inp = qtw.QTextEdit()
+
+        label = qtw.QLabel("TEXT")
+
+        layout = qtw.QVBoxLayout()
+        layout.addWidget(button)
+        layout.addWidget(inp)
+        layout.addWidget(label)
+
+        button.clicked.connect(lambda: label.setPixmap(qtg.QPixmap(f'{inp.toPlainText()}.png')))
+
+        container = qtw.QWidget()
+        container.setLayout(layout)
+
+        self.setCentralWidget(container)
+
+
+
+
+
+window = MainWindow()
+window.show()
+
+app.exec()
